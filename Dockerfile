@@ -29,7 +29,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
     && apt-get install -y --no-install-recommends nodejs \
     && rm -rf /var/lib/apt/lists/*
-RUN npm install -g @playwright/mcp@latest @playwright/cli@latest playwright@latest \
+# Pinned to the versions the deployed image already runs; @latest made every
+# rebuild pull a different Playwright and silently change browser behaviour.
+RUN npm install -g @playwright/mcp@0.0.83 @playwright/cli@0.1.22 playwright@1.64.1 \
     && playwright-cli --help \
     && playwright install --with-deps chromium \
     && rm -rf /var/lib/apt/lists/*
